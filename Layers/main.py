@@ -1,5 +1,5 @@
 """
-Example of colour changing layering
+Example of colour changing pad layering
 """
 
 print("Macro-Pad Starting")
@@ -23,9 +23,10 @@ from kmk.modules.encoder import EncoderHandler
 encoder = EncoderHandler()
 keyboard.modules = [encoder]
 
-encoder.pins = ( (board.D9, board.D8, board.D7,))
+encoder.pins = ( (board.D9, board.D8, board.D7), )
 encoder.map = [
-    (( KC.VOLU, KC.VOLD, KC.MEDIA_PLAY_PAUSE )) 
+    ( (KC.VOLU, KC.VOLD, KC.MUTE), )
+    # add extra layers if required
 ]
 
 from kmk.modules.layers import Layers as Layers
@@ -67,7 +68,7 @@ keyboard.keymap = [
     # 0 - Base Layer
     [
         KC.HT(KC.a, TO_LAYER_1), KC.HT(KC.b, TO_LAYER_2), KC.HT(KC.c, TO_LAYER_3),
-        KC.VOLU, KC.VOLD, KC.N0
+        KC.N0, KC.N0, KC.N0
     ],
     # 1 - Red Layer
     [
@@ -85,7 +86,6 @@ keyboard.keymap = [
         KC.N3, KC.N3, KC.N3
     ],
 ]
-
 # 
 
 if __name__ == '__main__':
