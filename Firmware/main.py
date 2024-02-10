@@ -67,12 +67,12 @@ TO_LAYER_3.after_press_handler(colour)
 keyboard.keymap = [
     # 0 - Base Layer
     [
-        KC.HT(KC.MEDIA_PREV_TRACK, TO_LAYER_1), KC.HT(KC.MEDIA_PLAY_PAUSE, TO_LAYER_2), KC.HT(KC.MEDIA_NEXT_TRACK, TO_LAYER_3),
-        KC.LCTRL(KC.LGUI(KC.N3)), KC.LGUI(KC.N4), KC.LGUI(KC.N5)
+        KC.HT(KC.LGUI(KC.N4), TO_LAYER_1), KC.HT(KC.LGUI(KC.N5), TO_LAYER_2), KC.HT(KC.LGUI(KC.N6), TO_LAYER_3),
+        KC.LCTRL(KC.LGUI(KC.N1)), KC.LCTRL(KC.LGUI(KC.N2)), KC.LGUI(KC.N3)
     ],
     # 1 - Red Layer
     [
-        KC.HT(KC.d, TO_LAYER_0), KC.HT(KC.e, TO_LAYER_2), KC.HT(KC.f, TO_LAYER_3),
+        KC.HT(KC.MEDIA_PREV_TRACK, TO_LAYER_0), KC.HT(KC.MEDIA_PLAY_PAUSE, TO_LAYER_2), KC.HT(KC.MEDIA_NEXT_TRACK, TO_LAYER_3),
         KC.N1, KC.N1, KC.N1
     ],
     # 2 - Green Layer
