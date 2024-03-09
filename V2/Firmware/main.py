@@ -12,8 +12,8 @@ from kmk.scanners import DiodeOrientation
 
 keyboard = KMKKeyboard()
 
-keyboard.col_pins = (board.D2,board.D5,board.D6)
-keyboard.row_pins = (board.D3,board.D4)
+keyboard.col_pins = (board.MOSI,board.D8,board.D7)
+keyboard.row_pins = (board.D10,board.D9)
 keyboard.diode_orientation = DiodeOrientation.COL2ROW
 
 from kmk.extensions.media_keys import MediaKeys
@@ -23,7 +23,7 @@ from kmk.modules.encoder import EncoderHandler
 encoder = EncoderHandler()
 keyboard.modules = [encoder]
 
-encoder.pins = ( (board.D9, board.D8, board.D7), )
+encoder.pins = ( (board.D4, board.D3, board.D1), )
 encoder.map = [
     ( (KC.VOLU, KC.VOLD, KC.MUTE), )
     # add extra layers if required
@@ -37,31 +37,49 @@ holdtap = HoldTap()
 keyboard.modules.append(holdtap)
 
 import neopixel
-pixel = neopixel.NeoPixel(board.NEOPIXEL, 1)
+pixel = neopixel.NeoPixel(board.A3, 4)
 
+from kmk.extensions.peg_oled_display import Oled,OledDisplayMode,OledReactionType,OledData
+
+SCL=board.A1
+SDA=board.A2
+
+oled_ext = Oled(
+    OledData(
+        corner_one={0:OledReactionType.STATIC,1:["layer"]},
+        corner_two={0:OledReactionType.LAYER,1:["1","2","3","4"]},
+        corner_three={0:OledReactionType.LAYER,1:["base","raise","lower","adjust"]},
+        corner_four={0:OledReactionType.LAYER,1:["qwerty","nums","shifted","leds"]}
+        ),
+        toDisplay=OledDisplayMode.TXT,flip=False)
+
+keyboard.extensions.append(oled_ext)
+
+"""
 def colour(key, keyboard, *args):
     layer = keyboard.active_layers[0]
     if layer == 0:
-        pixel.fill((  0,   0,   0))
+        pixel.fill((100,   100,   255))
     elif layer == 1:    
-        pixel.fill((255,   0,   0))
+        pixel.fill((100,   50,   255))
     elif layer == 2:
-        pixel.fill((  0, 255,   0))
+        pixel.fill((255,   50,   50))
     elif layer == 3:
-        pixel.fill((  0,   0, 255))
+        pixel.fill(( 50,   255,   50))
     
+"""
 
 TO_LAYER_0 = KC.TO(0)
-TO_LAYER_0.after_press_handler(colour)
+#TO_LAYER_0.after_press_handler(colour)
 
 TO_LAYER_1 = KC.TO(1)
-TO_LAYER_1.after_press_handler(colour)
+#TO_LAYER_1.after_press_handler(colour)
 
 TO_LAYER_2 = KC.TO(2)
-TO_LAYER_2.after_press_handler(colour)
+#TO_LAYER_2.after_press_handler(colour)
 
 TO_LAYER_3 = KC.TO(3)
-TO_LAYER_3.after_press_handler(colour)
+#TO_LAYER_3.after_press_handler(colour)
 
 
 keyboard.keymap = [
@@ -77,8 +95,8 @@ keyboard.keymap = [
     ],
     # 2 - Green Layer
     [
-        KC.HT(KC.g, TO_LAYER_1), KC.HT(KC.h, TO_LAYER_0), KC.HT(KC.i, TO_LAYER_3),
-        KC.N2, KC.N2, KC.N2
+        KC.HT(KC.g, TO_LAYER_1), KC.HT(KC.RGB_TOG, TO_LAYER_0), KC.HT(KC.i, TO_LAYER_3),
+        KC.RGB_MODE_SWIRL, KC.RGB_MODE_KNIGHT, KC.RGB_MODE_BREATHE_RAINBOW
     ],
     # 3 - Blue Layer
     [
@@ -86,7 +104,6 @@ keyboard.keymap = [
         KC.N3, KC.N3, KC.N3
     ],
 ]
-# 
 
 if __name__ == '__main__':
     keyboard.go()
