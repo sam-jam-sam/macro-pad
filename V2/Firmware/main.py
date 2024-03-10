@@ -41,21 +41,20 @@ pixel = neopixel.NeoPixel(board.A3, 4)
 
 from kmk.extensions.peg_oled_display import Oled,OledDisplayMode,OledReactionType,OledData
 
-SCL=board.A1
-SDA=board.A2
+keyboard.SCL = board.A1
+keyboard.SDA = board.A0
 
 oled_ext = Oled(
     OledData(
-        corner_one={0:OledReactionType.STATIC,1:["layer"]},
+        corner_one={0:OledReactionType.STATIC,1:["Layer"]},
         corner_two={0:OledReactionType.LAYER,1:["1","2","3","4"]},
         corner_three={0:OledReactionType.LAYER,1:["base","raise","lower","adjust"]},
-        corner_four={0:OledReactionType.LAYER,1:["qwerty","nums","shifted","leds"]}
+        corner_four={0:OledReactionType.LAYER,1:["Tabs","Play Back","Red","Green"]}
         ),
         toDisplay=OledDisplayMode.TXT,flip=False)
 
 keyboard.extensions.append(oled_ext)
 
-"""
 def colour(key, keyboard, *args):
     layer = keyboard.active_layers[0]
     if layer == 0:
@@ -67,20 +66,17 @@ def colour(key, keyboard, *args):
     elif layer == 3:
         pixel.fill(( 50,   255,   50))
     
-"""
-
 TO_LAYER_0 = KC.TO(0)
-#TO_LAYER_0.after_press_handler(colour)
+TO_LAYER_0.after_press_handler(colour)
 
 TO_LAYER_1 = KC.TO(1)
-#TO_LAYER_1.after_press_handler(colour)
+TO_LAYER_1.after_press_handler(colour)
 
 TO_LAYER_2 = KC.TO(2)
-#TO_LAYER_2.after_press_handler(colour)
+TO_LAYER_2.after_press_handler(colour)
 
 TO_LAYER_3 = KC.TO(3)
-#TO_LAYER_3.after_press_handler(colour)
-
+TO_LAYER_3.after_press_handler(colour)
 
 keyboard.keymap = [
     # 0 - Base Layer
